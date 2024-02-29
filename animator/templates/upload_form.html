@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Images</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>  </head>
+<body>
+    <h1>Upload Images</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ initial_form.as_p }}
+
+        <div id="additional_images">
+            </div>
+
+        <button type="button" id="add_image_button">Add Another Image</button>
+        <button type="submit">Upload Images</button>
+    </form>
+
+    <script>
+        $(document).ready(function() {
+            var numImages = 1;  // Initial number of images (excluding the initial field)
+
+            $('#add_image_button').click(function() {
+                if (numImages < 4) {  // Limit to 4 additional images (total of 5)
+                    numImages++;
+                    var newField = '<div class="additional_image_field">' +
+                                       '<label for="image_' + numImages + '">Image ' + numImages + ':</label>' +
+                                       '<input type="file" name="image_' + numImages + '" id="image_' + numImages + '">' +
+                                       '</div>';
+                    $('#additional_images').append(newField);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
